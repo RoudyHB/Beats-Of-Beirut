@@ -39,7 +39,7 @@
 <main class="main">
     <div class="text-content">
         <h2>Get in Touch</h2>
-        <form action="https://formspree.io/f/xzzjabny" method="POST" class="contact-form">
+        <form id="contactForm" action="https://formspree.io/f/xzzjabny" method="POST" class="contact-form">
             <label for="fname">First Name:</label>
             <input type="text" id="fname" name="fname" required>
 
@@ -301,6 +301,36 @@
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
 
+    <script>
+  const form = document.getElementById('contactForm');
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault(); // Stop the browser from reloading
+
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        // ✅ Redirect to thank-you page
+        window.location.href = "thank-you.html";
+      } else {
+        alert("Oops! Something went wrong. Please try again.");
+      }
+    } catch (error) {
+      alert("There was a problem submitting the form.");
+    }
+  });
+</script>
+
 </body>
 </html>
+
 
