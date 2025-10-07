@@ -158,3 +158,34 @@ if (btn && nav) {
   });
 }
 });
+
+//redirect to thank you page after submission
+
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+  e.preventDefault(); // Prevent default form submission
+
+  const form = e.target;
+  const data = new FormData(form);
+
+  fetch(form.action, {
+    method: form.method,
+    body: data,
+    headers: { 'Accept': 'application/json' }
+  }).then(response => {
+    if (response.ok) {
+      // Redirect to your custom thank you page
+      window.location.href = 'thank-you.html';
+    } else {
+      response.json().then(data => {
+        if (data.errors) {
+          alert(data.errors.map(error => error.message).join(", "));
+        } else {
+          alert('Oops! There was a problem submitting your form.');
+        }
+      });
+    }
+  }).catch(() => {
+    alert('Oops! There was a problem submitting your form.');
+  });
+});
+
